@@ -18,19 +18,18 @@ const discordWebhook = "https://discord.com/api/webhooks/###/######"
 /** The following is the script code. Please DO NOT modify. **/
 
 const urlDict = {
-  Genshin: 'https://sg-hk4e-api.hoyolab.com/event/sol/sign?lang=en-us&act_id=e202102251931481',
-  Star_Rail: 'https://sg-public-api.hoyolab.com/event/luna/os/sign?lang=en-us&act_id=e202303301540311',
+  Genshin_Impact: 'https://sg-hk4e-api.hoyolab.com/event/sol/sign?lang=en-us&act_id=e202102251931481',
+  Honkai_Star_Rail: 'https://sg-public-api.hoyolab.com/event/luna/os/sign?lang=en-us&act_id=e202303301540311',
   Honkai_3: 'https://sg-public-api.hoyolab.com/event/mani/sign?lang=en-us&act_id=e202110291205111',
   Tears_of_Themis: 'https://sg-public-api.hoyolab.com/event/luna/os/sign?lang=en-us&act_id=e202308141137581',
   Zenless_Zone_Zero: 'https://sg-act-nap-api.hoyolab.com/event/luna/zzz/os/sign?lang=en-us&act_id=e202406031448091'
 };
 
 async function main() {
-  const messages = await Promise.all(profiles.map(autoSignFunction));
-  const hoyolabResp = `${messages.join('\n\n')}`;
+  const embeds = await Promise.all(profiles.map(autoSignFunction));
 
   if (discord_notify && discordWebhook) {
-    postWebhook(hoyolabResp);
+    postWebhook(embeds);
   }
 }
 
@@ -49,8 +48,8 @@ function autoSignFunction({
 }) {
   const urls = [];
 
-  if (genshin) urls.push(urlDict.Genshin);
-  if (honkai_star_rail) urls.push(urlDict.Star_Rail);
+  if (genshin) urls.push(urlDict.Genshin_Impact);
+  if (honkai_star_rail) urls.push(urlDict.Honkai_Star_Rail);
   if (honkai_3) urls.push(urlDict.Honkai_3);
   if (tears_of_themis) urls.push(urlDict.Tears_of_Themis);
   if (zenless_zone_zero) urls.push(urlDict.Zenless_Zone_Zero);
@@ -73,7 +72,14 @@ function autoSignFunction({
     muteHttpExceptions: true,
   };
 
-  let response = `Check-in completed for ${discordPing(discordID)}`;
+  let hasError = false;
+  const fields = [];
+
+  fields.push({
+    'name': 'Username',
+    'value': `${discordPing(discordID)}`,
+    'inline': false
+  });
 
   var sleepTime = 0
   const httpResponses = []
@@ -87,24 +93,35 @@ function autoSignFunction({
     const responseJson = JSON.parse(hoyolabResponse);
     const checkInResult = responseJson.message;
     const gameName = Object.keys(urlDict).find(key => urlDict[key] === urls[i])?.replace(/_/g, ' ');
-    const isError = checkInResult != "OK";
+    // const isError = checkInResult != "OK";
     const bannedCheck = responseJson.data?.gt_result?.is_risk;
+    if(!hasError) hasError = Boolean(bannedCheck);
 
     if (bannedCheck) {
-      response += `\n${gameName}: Auto check-in failed due to CAPTCHA blocking.`;
+      fields.push({
+        'name': gameName,
+        'value': 'Auto check-in failed due to CAPTCHA blocking.',
+      });
     } else {
-      response += `\n${gameName}: ${checkInResult}`;
+      fields.push({
+        'name': gameName,
+        'value': checkInResult,
+      });
     }
   }
 
-  return response;
+  return {
+    "color": hasError ? 16711680 : 65382,
+    fields
+  };
 }
 
-function postWebhook(data) {
+function postWebhook(embeds) {
   let payload = JSON.stringify({
     'username': 'Butlerboo',
     'avatar_url': 'https://i.imgur.com/SVowWyB.png',
-    'content': data
+    'content': 'Check-in successfully completed, Master.',
+    'embeds': embeds
   });
 
   const options = {
