@@ -94,8 +94,8 @@ function autoSignFunction({
   const fields = [];
 
   fields.push({
-    name: "Username",
-    value: `${discordPing(discordID)}`,
+    name: "",
+    value: `For ${discordPing(discordID)}`,
     inline: false,
   });
 
