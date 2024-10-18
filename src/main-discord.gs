@@ -12,7 +12,6 @@ const PROFILES = [
 ];
 
 const DISCORD_NOTIFY = true;
-const MY_DISCORD_ID = "1265475285902557226"; // Role
 const DISCORD_WEBHOOK =
   "https://discord.com/api/webhooks/1265471414643982396/zwwUrF3H0zEQOUIJtste-SszgFykxwhfSNyktv1IaFNaow270jmsFv1dE1d19R2Wij4H";
 
