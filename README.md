@@ -6,7 +6,8 @@
 <p align="center">
     <img src="https://img.shields.io/github/license/canaria3406/hoyolab-auto-sign?style=flat-square" alt="">
     <img src="https://img.shields.io/github/stars/canaria3406/hoyolab-auto-sign?style=flat-square" alt="">
-    <br><a href="/README_zh-tw.md">繁體中文</a>　<b>English</b>　<a href="/README_ru-ru.md">Русский</a>
+    <br><a href="/README_zh-tw.md">繁體中文</a>　<b>English</b>　<a href="/README_ru-ru.md">Русский</a> <br> <br>
+    <img src="https://github.com/user-attachments/assets/f2493058-d7f9-40db-90ff-f4ff351870c2" alt="">
 </p>
 
 A lightweight, secure, and free script that automatically collect HoYoLAB daily check in rewards.
@@ -28,6 +29,7 @@ Supports Genshin Impact, Honkai Impact 3rd, and Honkai: Star Rail, Tears of Them
    Select the event source: Time-driven
    Select the type of time based trigger: Day timer
    Select the time of day: recommended to choose any off-peak time between 0900 to 1500.
+
 
 ## Configuration
 
