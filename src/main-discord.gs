@@ -1,7 +1,18 @@
 const DISCORD_NOTIFY = true;
-const MY_DISCORD_ID = "1265475285902557226"; // Role
 const DISCORD_WEBHOOK =
   "https://discord.com/api/webhooks/1265471414643982396/zwwUrF3H0zEQOUIJtste-SszgFykxwhfSNyktv1IaFNaow270jmsFv1dE1d19R2Wij4H";
+
+const PROFILES = [
+  {
+    token: "ltoken_v2=v2_######; ltuid_v2=42######;",
+    genshin: false,
+    honkai_star_rail: false,
+    honkai_3: false,
+    tears_of_themis: false,
+    zenless_zone_zero: true,
+    discordID: "23######",
+  },
+];
 
 /** The above is the config. Please refer to the instructions on https://github.com/canaria3406/hoyolab-auto-sign for configuration. **/
 /** The following is the script code. Please DO NOT modify. **/
